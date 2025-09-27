@@ -73,7 +73,7 @@ if(loginForm){
 
     // Stay logged in
     if(localStorage.getItem('stayLogged') === 'true'){
-        window.location.href = 'buy.html';
+        window.location.href = 'dashboard.html';
     }
 
     loginBtn.addEventListener('click', ()=>{
@@ -83,8 +83,7 @@ if(loginForm){
         const found=users.find(x=>x.username===u && x.password===p);
         if(found){
             if(stayLogged.checked) localStorage.setItem('stayLogged','true');
-            alert('Login successful!');
-            window.location.href='buy.html';
+            window.location.href='dashboard.html';
         } else alert('Invalid username/password');
     });
 
@@ -98,4 +97,40 @@ if(loginForm){
         saveUsers(users);
         alert('Account created!');
     });
+}
+
+// ----- Logout -----
+const logoutBtn = document.getElementById('logout');
+if(logoutBtn){
+    logoutBtn.addEventListener('click', ()=>{
+        localStorage.removeItem('stayLogged');
+        window.location.href='index.html';
+    });
+}
+
+// ----- Download Button -----
+const downloadBtn = document.getElementById('downloadBtn');
+if(downloadBtn){
+    downloadBtn.addEventListener('click', ()=>{
+        const url = 'https://your-download-link.com/file.exe';
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ResonanceLoader.exe';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+}
+
+// ----- Buy Button -----
+const buyBtn = document.getElementById('buyBtn');
+if(buyBtn){
+    buyBtn.addEventListener('click', ()=>{
+        window.location.href='https://your-buy-link.com';
+    });
+}
+
+// ----- Access Control -----
+if(!document.getElementById('username') && localStorage.getItem('stayLogged')!=='true'){
+    window.location.href='index.html';
 }
