@@ -7,19 +7,20 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav><a href="buy.html">Buy</a> | <a href="index.html" id="logout">Logout</a></nav>
-<div class="container">
-    <h1>Installation Instructions</h1>
-    <p>Step 1: Download the loader.</p>
-    <p>Step 2: Place it in your desired directory.</p>
+<nav>
+    <a href="dashboard.html">Dashboard</a> | 
+    <a href="buy.html">Buy</a> | 
+    <a href="#" id="logout">Logout</a>
+</nav>
+
+<div class="container scrollable-container">
+    <h1>Installation</h1>
+    <p>Step 1: Download the loader below.</p>
+    <p>Step 2: Place it in your desired folder.</p>
     <p>Step 3: Run the loader.</p>
+    <button id="downloadBtn">Download Loader</button>
 </div>
+
 <script src="script.js"></script>
-<script>
-document.getElementById('logout').addEventListener('click', ()=>{
-    localStorage.removeItem('stayLogged');
-});
-if(localStorage.getItem('stayLogged')!=='true') window.location.href='index.html';
-</script>
 </body>
 </html>
