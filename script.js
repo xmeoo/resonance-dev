@@ -1,55 +1,89 @@
-const canvas = document.createElement('canvas');
-canvas.id = 'space';
-document.body.prepend(canvas);
-const ctx = canvas.getContext('2d');
+// Generate stars (CSS-based)
+const starContainer = document.getElementById('stars');
+if(starContainer){
+    const numStars = 50;
+    for(let i=0; i<numStars; i++){
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.animationDuration = (5 + Math.random()*5) + 's';
+        starContainer.appendChild(star);
+    }
+}
 
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+// Login system
+function getUsers(){ return JSON.parse(localStorage.getItem('users')||'[]'); }
+function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
 
-window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-});
+const loginForm = document.querySelector('.container');
+if(loginForm){
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const createBtn = document.getElementById('createBtn');
+    const stayLogged = document.getElementById('stayLogged');
 
-// Fewer stars for performance
-const numStars = 40;
-const stars = [];
-for (let i = 0; i < numStars; i++) {
-    stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        radius: Math.random() * 1 + 0.5
+    if(localStorage.getItem('stayLogged') === 'true'){
+        window.location.href = 'dashboard.html';
+    }
+
+    loginBtn.addEventListener('click', ()=>{
+        const u=usernameInput.value.trim();
+        const p=passwordInput.value.trim();
+        const users=getUsers();
+        const found=users.find(x=>x.username===u && x.password===p);
+        if(found){
+            if(stayLogged.checked) localStorage.setItem('stayLogged','true');
+            window.location.href='dashboard.html';
+        } else alert('Invalid username/password');
+    });
+
+    createBtn.addEventListener('click', ()=>{
+        const u=usernameInput.value.trim();
+        const p=passwordInput.value.trim();
+        if(!u||!p){ alert('Enter username and password'); return; }
+        const users=getUsers();
+        if(users.find(x=>x.username===u)){ alert('Username exists'); return; }
+        users.push({username:u,password:p});
+        saveUsers(users);
+        alert('Account created!');
     });
 }
 
-let mouse = { x: width / 2, y: height / 2 };
-window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#fff';
-    
-    for (let star of stars) {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Move star
-        star.x += star.vx;
-        star.y += star.vy;
-        if (star.x < 0 || star.x > width) star.vx *= -1;
-        if (star.y < 0 || star.y > height) star.vy *= -1;
-
-        // Optional subtle parallax (no lines)
-        let dx = (mouse.x - width / 2) * 0.01;
-        let dy = (mouse.y - height / 2) * 0.01;
-        star.x += dx * 0.1;
-        star.y += dy * 0.1;
-    }
-
-    requestAnimationFrame(animate);
+// Logout
+const logoutBtn = document.getElementById('logout');
+if(logoutBtn){
+    logoutBtn.addEventListener('click', ()=>{
+        localStorage.removeItem('stayLogged');
+        window.location.href='index.html';
+    });
 }
 
-animate();
+// Download button
+const downloadBtn = document.getElementById('downloadBtn');
+if(downloadBtn){
+    downloadBtn.addEventListener('click', ()=>{
+        const url = 'https://your-download-link.com/file.exe'; // replace
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ResonanceLoader.exe';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+}
+
+// Buy button
+const buyBtn = document.getElementById('buyBtn');
+if(buyBtn){
+    buyBtn.addEventListener('click', ()=>{
+        window.location.href='https://your-buy-link.com'; // replace
+    });
+}
+
+// Access control for protected pages
+const protectedPages = ['dashboard.html','install.html','buy.html'];
+if(protectedPages.includes(window.location.pathname.split('/').pop()) && localStorage.getItem('stayLogged')!=='true'){
+    window.location.href='index.html';
+}
