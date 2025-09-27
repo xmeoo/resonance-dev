@@ -7,18 +7,18 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav><a href="install.html">Installation</a> | <a href="index.html" id="logout">Logout</a></nav>
-<div class="container">
+<nav>
+    <a href="dashboard.html">Dashboard</a> | 
+    <a href="install.html">Installation</a> | 
+    <a href="#" id="logout">Logout</a>
+</nav>
+
+<div class="container scrollable-container">
     <h1>Buy Early Access</h1>
-    <p>Purchase early access to Resonance Loader for $10.</p>
-    <button onclick="alert('Payment flow placeholder')">Buy Now</button>
+    <p>Get early access for $5.</p>
+    <button id="buyBtn">Buy for $5</button>
 </div>
+
 <script src="script.js"></script>
-<script>
-document.getElementById('logout').addEventListener('click', ()=>{
-    localStorage.removeItem('stayLogged');
-});
-if(localStorage.getItem('stayLogged')!=='true') window.location.href='index.html';
-</script>
 </body>
 </html>
