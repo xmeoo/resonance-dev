@@ -1,17 +1,3 @@
-// Generate stars (CSS-based)
-const starContainer = document.getElementById('stars');
-if(starContainer){
-    const numStars = 50;
-    for(let i=0; i<numStars; i++){
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.animationDuration = (5 + Math.random()*5) + 's';
-        starContainer.appendChild(star);
-    }
-}
-
 // Login system
 function getUsers(){ return JSON.parse(localStorage.getItem('users')||'[]'); }
 function saveUsers(users){ localStorage.setItem('users', JSON.stringify(users)); }
@@ -82,7 +68,7 @@ if(buyBtn){
     });
 }
 
-// Access control for protected pages
+// Access control
 const protectedPages = ['dashboard.html','install.html','buy.html'];
 if(protectedPages.includes(window.location.pathname.split('/').pop()) && localStorage.getItem('stayLogged')!=='true'){
     window.location.href='index.html';
