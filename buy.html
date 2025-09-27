@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy Early Access</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><a href="install.html">Installation</a> | <a href="index.html" id="logout">Logout</a></nav>
+<div class="container">
+    <h1>Buy Early Access</h1>
+    <p>Purchase early access to Resonance Loader for $10.</p>
+    <button onclick="alert('Payment flow placeholder')">Buy Now</button>
+</div>
+<script src="script.js"></script>
+<script>
+document.getElementById('logout').addEventListener('click', ()=>{
+    localStorage.removeItem('stayLogged');
+});
+if(localStorage.getItem('stayLogged')!=='true') window.location.href='index.html';
+</script>
+</body>
+</html>
