@@ -10,9 +10,7 @@ html, body {
 }
 
 .container {
-    position: relative;
-    z-index: 1;
-    width:400px;
+    width:600px;
     max-width:90%;
     margin:80px auto;
     padding:30px;
@@ -29,33 +27,22 @@ h1 {
     text-shadow:0 0 10px #fff;
 }
 
-input, button {
-    font-size:16px;
-    padding:12px;
-    border-radius:12px;
-    outline:none;
-    border:1px solid #fff;
-    margin:15px 0;
-}
-
-input {
-    width:100%;
-    background: rgba(255,255,255,0.05);
-    color:white;
-}
-
-input::placeholder { color:rgba(255,255,255,0.6); }
+p { margin:15px 0; line-height:1.5; }
 
 button {
     cursor:pointer;
     font-weight:bold;
+    font-size:16px;
+    padding:12px;
+    border-radius:12px;
     background:black;
     color:white;
     width:80%;
-    margin:15px 0;
+    margin:20px auto;
     box-shadow: 0 0 5px #fff;
     border:none;
     transition: all 0.3s;
+    display:block;
 }
 
 button:hover {
