@@ -1,77 +1,74 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body {
-    width:100%;
-    height:100%;
-    font-family:'Segoe UI', sans-serif;
+/* Reset + theme */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
     background: black;
     color: white;
     overflow-x: hidden;
-    position: relative;
 }
 
-.container {
-    width:600px;
-    max-width:90%;
-    margin:80px auto;
-    padding:30px;
-    border-radius:20px;
-    background: rgba(255,255,255,0.05);
-    text-align:center;
-    backdrop-filter: blur(5px);
-}
-
-h1 {
-    margin-bottom:20px;
-    font-weight:600;
-    color:white;
-    text-shadow:0 0 10px #fff;
-}
-
-p { margin:15px 0; line-height:1.5; }
-
-button {
-    cursor:pointer;
-    font-weight:bold;
-    font-size:16px;
-    padding:12px;
-    border-radius:12px;
-    background:black;
-    color:white;
-    width:80%;
-    margin:20px auto;
-    box-shadow: 0 0 5px #fff;
-    border:none;
-    transition: all 0.3s;
-    display:block;
-}
-
-button:hover {
-    filter: brightness(1.3);
-    box-shadow:0 0 20px #fff, 0 0 40px #fff;
-}
-
-nav {
+/* Smooth, lightweight stars */
+.stars {
     position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1;
-    background: rgba(0,0,0,0.3);
-    padding: 10px 15px;
-    border-radius: 10px;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    background:
+        radial-gradient(white 1px, transparent 1px) 0 0/3px 3px,
+        radial-gradient(white 1px, transparent 1px) 1.5px 1.5px/3px 3px;
+    animation: moveStars 60s linear infinite;
+}
+
+@keyframes moveStars {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+/* Nav bar */
+nav {
+    padding: 15px;
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 15px;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
-nav a:hover { text-decoration: underline; }
+nav a:hover {
+    color: #aaa;
+}
 
-.scrollable-container {
-    max-height: 80vh;
-    overflow-y: auto;
-    padding: 10px;
-    text-align:left;
+/* Content */
+.container {
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: #ddd;
 }
