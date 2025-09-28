@@ -26,6 +26,7 @@
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 let stars = [];
+let mouse = { x: null, y: null };
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -34,12 +35,18 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
+// mouse tracking
+window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+});
+
 // create stars
 for (let i = 0; i < 120; i++) {
     stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 1.5,
+        radius: Math.random() * 1.5 + 0.5,
         speed: Math.random() * 0.5 + 0.2
     });
 }
@@ -52,6 +59,43 @@ function drawStars() {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
+    });
+}
+
+// connect stars with lines
+function connectStars() {
+    for (let a = 0; a < stars.length; a++) {
+        for (let b = a + 1; b < stars.length; b++) {
+            let dx = stars[a].x - stars[b].x;
+            let dy = stars[a].y - stars[b].y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) { // distance threshold
+                ctx.strokeStyle = "rgba(255,255,255,0.2)";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(stars[a].x, stars[a].y);
+                ctx.lineTo(stars[b].x, stars[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+// connect stars to mouse
+function connectMouse() {
+    if (!mouse.x || !mouse.y) return;
+    stars.forEach(star => {
+        let dx = star.x - mouse.x;
+        let dy = star.y - mouse.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+            ctx.strokeStyle = "rgba(255,255,255,0.3)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(star.x, star.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+        }
     });
 }
 
@@ -68,6 +112,8 @@ function animateStars() {
 
 function loop() {
     drawStars();
+    connectStars();
+    connectMouse();
     animateStars();
     requestAnimationFrame(loop);
 }
