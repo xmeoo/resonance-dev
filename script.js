@@ -2,7 +2,7 @@
 const downloadBtn = document.getElementById('downloadBtn');
 if(downloadBtn){
     downloadBtn.addEventListener('click', ()=>{
-        const url = 'https://raw.githubusercontent.com/xmeoo/Resonance/blob/main/Resonance.dll'; // replace
+        const url = 'https://raw.githubusercontent.com/xmeoo/Resonance/main/Resonance.dll'; // replace
         const a = document.createElement('a');
         a.href = url;
         a.download = 'ResonanceLoader.exe';
