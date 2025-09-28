@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="stars"></div> <!-- background stars -->
+<canvas id="stars"></canvas> <!-- background stars -->
 
 <nav>
     <a href="dashboard.html">Dashboard</a> | 
@@ -21,6 +21,58 @@
     <p>Your all-in-one loader with installation guide and early access options.</p>
     <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
 </div>
+
+<script>
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let stars = [];
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+// create stars
+for (let i = 0; i < 120; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5,
+        speed: Math.random() * 0.5 + 0.2
+    });
+}
+
+// draw stars
+function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
+
+// animate stars (move downward slowly)
+function animateStars() {
+    stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+            star.y = 0;
+            star.x = Math.random() * canvas.width;
+        }
+    });
+}
+
+function loop() {
+    drawStars();
+    animateStars();
+    requestAnimationFrame(loop);
+}
+loop();
+</script>
 
 </body>
 </html>
